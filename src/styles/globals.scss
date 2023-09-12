@@ -1,3 +1,99 @@
 @import "antd/dist/reset.css";
-@import "./components/header.scss";
 @import "./pages/home.scss";
+@import './components/index.scss';
+@import './responsive.scss';
+.page-content {
+    width: calc(100% - 74px);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    @include small() {
+      width: 100%;
+    }
+
+    @include xs-small() {
+      width: 100%;
+    }
+    @include mobileToTablet {
+      width: 100%;
+    }
+  }
+  .page-container {
+    max-width: 1920px;
+    width: 100%;
+    margin: auto;
+    display: flex;
+    .page-sidebar {
+      width: 4.625rem;
+      position: relative;
+      background: rgba(0, 2, 23, 0.8);
+      // backdrop-filter: blur(2px);
+      @include mobileToTablet {
+        width: 0rem;
+      }
+      @include small() {
+        width: 0px;
+      }
+
+      @include xs-small() {
+        width: 0px;
+      }
+    }
+    .page-content {
+      .page-header {
+        background: aliceblue;
+        position: fixed;
+        width:calc(100% - 4.625rem);
+      }
+      width: calc(100% - 74px);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      @include small() {
+        width: 100%;
+      }
+
+      @include xs-small() {
+        width: 100%;
+      }
+      @include mobileToTablet {
+        width: 100%;
+      }
+    }
+
+    .page-wrapper {
+      overscroll-behavior-x: contain;
+      overflow-y: scroll;
+      height: 100vh;
+      @include mobileToTablet {
+        min-height: calc(100vh - 6.375rem);
+      }
+
+      .default-page {
+        background-color: var(--Bg-default);
+        min-height: calc(100vh - 4rem);
+        margin-top: 3.125rem;
+      }
+    }
+  }
+  ::-webkit-scrollbar {
+    width: 0.125rem;
+    height: 0.125rem;
+    border-radius: 0.25rem;
+  
+    // display: none;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--Dark-1);
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: var(--Lighter);
+    border-radius: 0.25rem;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--Lighter);
+  }

@@ -1,0 +1,25 @@
+.wrapper-header{
+    .block{
+        width: 9%;
+    }
+    .right-header{
+        display: flex;
+        align-items: center;
+        .left-header{
+            width: 13rem;
+            justify-content: space-evenly;
+            display: flex;
+            span{
+                cursor: pointer;
+            }
+        }
+    }
+    .avatar{
+        cursor: pointer;
+    }
+    padding-top:1rem;
+    padding-bottom:1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

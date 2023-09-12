@@ -4,6 +4,7 @@ import { PAGE_TITLE } from "@/constants";
 import Head from "next/head";
 import FullScreenLoading from "@/components/FullScreanLoading";
 import Header from "@/components/Header";
+import SidebarHome from "@/components/SidebarHome";
 interface PropsPage {
     title: string;
     loadingData: boolean;
@@ -12,6 +13,7 @@ interface PropsPage {
 }
 const Page = (props: PropsPage) => {
     const { title, loadingData, children } = props
+
     const page = useMemo(() => {
         if (loadingData) {
             return <FullScreenLoading />;
@@ -28,8 +30,23 @@ const Page = (props: PropsPage) => {
             <Head>
                 <title>{PAGE_TITLE.PREFIX + title}</title>
             </Head>
-            <Header />
-            {page}
+       
+            <div className="page" id="page">
+                <div className="page-container">
+                    <div className="page-sidebar">
+                        <SidebarHome />
+                    </div>
+                    <div className="page-content">
+                        <div className={`page-header `}>
+                            <Header />
+                        </div>
+                        <div className="page-wrapper">
+                            <div className="default-page">{page}</div>
+                            {/* {footer && <Footer />} */}
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         </>
     )
