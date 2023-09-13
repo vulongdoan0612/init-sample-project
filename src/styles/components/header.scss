@@ -1,22 +1,38 @@
-.wrapper-header{
-    .block{
+.wrapper-header {
+    .block {
         width: 9%;
     }
-    .right-header{
+
+    .right-header {
         display: flex;
         align-items: center;
-        .left-header{
+
+        .left-header {
             width: 13rem;
             justify-content: space-evenly;
             display: flex;
-            span{
+
+            span {
                 cursor: pointer;
             }
         }
     }
-    .avatar{
+
+    .avatar {
         cursor: pointer;
+        display: flex;
+        align-items: center;
+        img {
+            border-radius: 50%;
+            height: 3rem;
+            width: 3rem;
+        }
+        .username{
+            padding-left:1rem;
+        }
     }
+    padding-left:1.5rem;
+    padding-right:1.5rem;
     padding-top:1rem;
     padding-bottom:1rem;
     display: flex;

@@ -84,7 +84,7 @@
   @include mobileToTablet {
     padding-bottom: 5.5rem !important;
     width: 15rem;
-
+    display: none;
     .text-hover {
       visibility: visible;
       opacity: 1;

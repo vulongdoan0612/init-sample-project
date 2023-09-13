@@ -1,14 +1,17 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { getProfile } from "@/services/account";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { WritableDraft } from "immer/dist/internal";
 
 interface IState {
-  isAuthenticated: boolean;
+  isAuthenticated?: boolean;
   account?: any;
+  loading?:boolean;
 }
 
 const initialState: IState = {
   isAuthenticated: false,
-  account: {}
+  account: {},
+  loading:false
 };
 
 const slicer = createSlice({
@@ -18,12 +21,14 @@ const slicer = createSlice({
     setAuthenticate: (
       state: WritableDraft<IState>,
       action: PayloadAction<{
-        isAuthenticated: boolean;
-        account: any;
+        isAuthenticated?: boolean;
+        account?: any;
+        loading?:boolean
       }>
     ) => {
       state.isAuthenticated = action.payload.isAuthenticated;
       state.account = action.payload.account;
+      state.loading = action.payload.loading;
     },
   },
 });

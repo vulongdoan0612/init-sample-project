@@ -1,6 +1,7 @@
 export enum PAGE_TITLE {
     PREFIX = "FlashDeck | ",
-    HOME="HOME"
+    HOME="HOME",
+    LOGIN="LOGIN"
 }
   
 export enum MESSAGE_TOAST {

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { PAGE_TITLE } from "@/constants";
 import Page from "@/layout/Page";
 import { Button, Form, Input } from "antd";
-import { getProfile, requestLogin } from "@/services/account";
+import { getProfile, getProfileEmployer, requestLogin, requestLoginEmployer } from "@/services/account";
 import { useDispatch, useSelector } from "react-redux";
 import { setAuthenticate } from "@/redux/reducers/auth";
 import { useRouter } from "next/router";
@@ -10,7 +10,7 @@ import { isLoggedIn } from "@/utils/checkToken";
 import useDidMountEffect from "@/utils/customHook";
 import Link from "next/link";
 
-const Login = () => {
+const LoginEmployer = () => {
     const router = useRouter();
     useDidMountEffect(() => {
         if (isLoggedIn()) {
@@ -25,14 +25,16 @@ const Login = () => {
                 email: values.username,
                 password: values.password
             }
-            const response = await requestLogin(dataLogin);
+            const response = await requestLoginEmployer(dataLogin);
             if (response.status === 200 && response?.data?.token) {
                 try {
-                    console.log(response?.data?.refreshToken)
+                    console.log(response)
                     localStorage.setItem('access_token', response?.data?.token);
                     localStorage.setItem('refresh_token', response?.data?.refreshToken);
+                    localStorage.setItem('role', response?.data?.role);
+
                 } finally {
-                    const profile = await getProfile(response?.data?.token, response?.data?.refreshToken)
+                    const profile = await getProfileEmployer(response?.data?.token, response?.data?.refreshToken)
                     console.log(profile)
                     if (response.status === 200 && profile?.user) {
                         console.log(profile.data)
@@ -102,13 +104,15 @@ const Login = () => {
                     </Form.Item>
 
 
-
                     <Form.Item className="forgot-password">
-                        <Form.Item name="remember" valuePropName="checked" noStyle>
-                            <Link href="/login-employer">Bạn là doanh nghiệp ?</Link>
-                        </Form.Item>
 
-                        <Link className="login-form-forgot" href="/forgot-password">
+
+                        <Link href="/login">
+                            <span>
+                                Bạn là người dùng ?
+                            </span>
+                        </Link>
+                        <Link className="login-form-forgot" href="/forgot-password-employer">
                             Forgot password
                         </Link>
                     </Form.Item>
@@ -125,7 +129,7 @@ const Login = () => {
                 </Form>
             </div>
 
-        </Page >
+        </Page>
     )
 }
-export default Login;
+export default LoginEmployer;

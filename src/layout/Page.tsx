@@ -12,8 +12,8 @@ interface PropsPage {
 
 }
 const Page = (props: PropsPage) => {
-    const { title, loadingData, children } = props
-
+    const { title, loadingData, children, } = props
+    console.log(title)
     const page = useMemo(() => {
         if (loadingData) {
             return <FullScreenLoading />;
@@ -28,21 +28,21 @@ const Page = (props: PropsPage) => {
     return (
         <>
             <Head>
-                <title>{PAGE_TITLE.PREFIX + title}</title>
+                <title>{PAGE_TITLE.LOGIN + title}</title>
             </Head>
-       
+
             <div className="page" id="page">
                 <div className="page-container">
                     <div className="page-sidebar">
                         <SidebarHome />
                     </div>
                     <div className="page-content">
-                        <div className={`page-header `}>
+                        {title !== 'LOGIN' ? <div className={`page-header `}>
                             <Header />
-                        </div>
-                        <div className="page-wrapper">
+                        </div> : <></>}
+
+                        <div className={`page-wrapper ${title === 'LOGIN' ? 'disable-scroll' : ''}`}>
                             <div className="default-page">{page}</div>
-                            {/* {footer && <Footer />} */}
                         </div>
                     </div>
                 </div>

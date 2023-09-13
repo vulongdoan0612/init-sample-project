@@ -36,12 +36,10 @@ const SidebarHome = () => {
     <>
       <div onClick={handleSetShowSidebar} className={`sidebar-mask ${isShow && 'isShow'}`}></div>
       <div className={`sidebarhome ${isShow && 'isShow'}`}>
-     
         <ul className="sidebarhome-menu ">
           {SIDEBARLIST.map((item, index) => (
             <SidebarItem key={index}  activeItem={activeMenu} item={item} index={index} />
           ))}
-         
         </ul>
       </div>
     </>

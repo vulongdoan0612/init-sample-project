@@ -29,6 +29,7 @@ export const SIDEBARLIST = [
     href: '/contact',
     tab: 'contact',
   },
+  
 ];
 
 
