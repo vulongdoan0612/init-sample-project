@@ -1,0 +1,38 @@
+.content-component {
+    .header {
+        display: flex;
+        justify-content: space-between;
+        padding-bottom: 1rem;
+
+    }
+
+    .content {
+        display: flex;
+        flex-direction: row;
+        .left-column{
+            display: flex;
+            flex-direction: column;
+            span{
+                padding-bottom:1rem;
+            }
+        }
+        .right-column{
+            padding-left:4rem;
+            display: flex;
+            flex-direction: column;
+        }
+        .name,
+        .email,
+        .national,
+        .country,
+        .married {
+            padding-bottom:1rem;
+            // display: flex;
+            // width: 300px;
+            // span:last-child{
+            // padding-left:5rem;
+            // }
+        }
+
+    }
+}

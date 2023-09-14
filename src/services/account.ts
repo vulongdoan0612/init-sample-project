@@ -11,7 +11,7 @@ export const requestLogin = async (data: ILogin) => {
 
   return axios(config);
 };
-export const requestForgotPassword= async (data: IForgotPassword) => {
+export const requestForgotPassword = async (data: IForgotPassword) => {
   const config = {
     method: "POST",
     url: `/forgot-password`,
@@ -20,7 +20,7 @@ export const requestForgotPassword= async (data: IForgotPassword) => {
 
   return axios(config);
 };
-export const requestForgotPasswordEmployer= async (data: IForgotPassword) => {
+export const requestForgotPasswordEmployer = async (data: IForgotPassword) => {
   const config = {
     method: "POST",
     url: `/forgot-password-employer`,
@@ -29,7 +29,7 @@ export const requestForgotPasswordEmployer= async (data: IForgotPassword) => {
 
   return axios(config);
 };
-export const requestResetPassword= async (data: IResetPassword) => {
+export const requestResetPassword = async (data: IResetPassword) => {
   const config = {
     method: "POST",
     url: `/reset-password`,
@@ -38,7 +38,7 @@ export const requestResetPassword= async (data: IResetPassword) => {
 
   return axios(config);
 };
-export const requestResetPasswordEmployer= async (data: IResetPassword) => {
+export const requestResetPasswordEmployer = async (data: IResetPassword) => {
   const config = {
     method: "POST",
     url: `/reset-password-employer`,
@@ -65,7 +65,30 @@ export const requestRegister = async (data: IRegister) => {
 
   return axios(config);
 };
+export const changeProfile = async (data: any,accessToken:string |null) => {
+  const config = {
+    method: "PUT",
+    url: `/change-profile`,
+    data: data,
+    headers: {
+      'Authorization': accessToken
+    },
+  };
 
+  return axios(config);
+};
+export const changeProfileEmployer = async (data: any,accessToken:string |null) => {
+  const config = {
+    method: "PUT",
+    url: `/change-profile-employer`,
+    data: data,
+    headers: {
+      'Authorization': accessToken
+    },
+  };
+
+  return axios(config);
+};
 export const getProfile = async (accessToken: string, refresh_token: string) => {
   const config = {
     method: "GET",
@@ -118,17 +141,17 @@ export const getProfileEmployer = async (accessToken: string, refresh_token: str
   }
 };
 export const requestNewAccessToken = async (refreshToken: string) => {
+  console.log(refreshToken)
   try {
     const config = {
       method: "POST",
       url: `/refresh-token`,
-      headers: {
-        'Authorization': refreshToken
+      data: {
+        "refreshToken": refreshToken
       }
     }
 
     const response = await axios(config);
-
     if (response.status === 200) {
       const data = response.data;
       const newAccessToken = data.accessToken;
@@ -146,7 +169,7 @@ export const requestNewAccessToken = async (refreshToken: string) => {
 };
 // utils.js
 
-export const logout = (dispatch:any) => {
+export const logout = (dispatch: any) => {
   // Xóa AccessToken và RefreshToken từ Local Storage
   localStorage.removeItem('access_token');
   localStorage.removeItem('refresh_token');

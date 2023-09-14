@@ -34,12 +34,12 @@ const LoginEmployer = () => {
                     localStorage.setItem('role', response?.data?.role);
 
                 } finally {
-                    const profile = await getProfileEmployer(response?.data?.token, response?.data?.refreshToken)
-                    console.log(profile)
-                    if (response.status === 200 && profile?.user) {
-                        console.log(profile.data)
-                        dispatch(setAuthenticate({ isAuthenticated: true, account: profile?.user, loading: false }));
-                    }
+                    // const profile = await getProfileEmployer(response?.data?.token, response?.data?.refreshToken)
+                    // console.log(profile)
+                    // if (response.status === 200 && profile?.user) {
+                    //     console.log(profile.data)
+                    //     dispatch(setAuthenticate({ isAuthenticated: true, account: profile?.user, loading: false }));
+                    // }
                     router.push('/');
                 }
 

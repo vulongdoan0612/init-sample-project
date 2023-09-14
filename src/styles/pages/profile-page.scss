@@ -1,0 +1,34 @@
+.profile-page {
+    .avatar {
+        img {
+            border-radius: 50%;
+
+        }
+
+        .ant-image {
+            img {
+                height: 5rem;
+                object-fit: cover;
+            }
+
+            width: 5rem;
+        }
+    }
+
+    .profile-content {
+        .content-component{
+
+            border-radius: 1rem;
+            padding:1.5rem;
+            margin-top:1rem !important;
+            width: 80%;
+            margin: auto;
+            background-color: beige;
+        }
+        .content-component:nth-child(2){
+            margin-top: 2rem !important;
+        }
+        padding-top: 2rem;
+    }
+
+}

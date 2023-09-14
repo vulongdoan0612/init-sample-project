@@ -15,6 +15,7 @@
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
     "antd": "^5.9.0",
+    "antd-img-crop": "^4.12.2",
     "axios": "^1.5.0",
     "eslint": "8.49.0",
     "eslint-config-next": "13.4.19",
@@ -26,5 +27,8 @@
     "react-responsive": "^9.0.2",
     "sass": "^1.66.1",
     "typescript": "5.2.2"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.198"
   }
 }

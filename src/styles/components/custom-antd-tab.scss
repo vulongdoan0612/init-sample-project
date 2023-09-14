@@ -1,0 +1,19 @@
+.custom-antd-tab {
+    .ant-tabs-nav-wrap {
+        justify-content: center;
+
+        .ant-tabs-tab {
+            padding: 12px 34px;
+            margin: 0 !important;
+
+            .ant-tabs-tab-btn {
+                color: black;
+            }
+        }
+
+        .ant-tabs-ink-bar {
+            background: linear-gradient(90deg, rgba(67, 153, 255, .2), #4399ff 28.65%, #3a3985);
+            height: 0.125rem;
+        }
+    }
+}

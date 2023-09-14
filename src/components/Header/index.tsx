@@ -9,7 +9,6 @@ import React, { useEffect, useState } from 'react';
 import { HEADER_TITLE } from "@/constants/header";
 import Link from "next/link";
 import { useMediaQuery } from "react-responsive";
-import { IconMenuHeader } from "../CustomIcons";
 
 const Header = () => {
     useDidMountEffect(() => {
@@ -21,6 +20,8 @@ const Header = () => {
     const dispatch = useDispatch();
     const { account, isAuthenticated, loading } = useSelector((state: RootState) => state.auth);
     const handleLogOut = () => {
+        console.log('log')
+        router.push('/')
         logout(dispatch)
     }
     const items = [
@@ -28,9 +29,9 @@ const Header = () => {
             ? {
                 key: '1',
                 label: (
-                    <>
+                    <Link href="/profile">
                         <span className="username">{account?.username ? account?.username : account?.companyName}</span>
-                    </>
+                    </Link>
                 ),
             }
             : null, // Sử dụng `null` khi không muốn hiển thị key '1'
@@ -39,7 +40,7 @@ const Header = () => {
                 key: '2',
                 label: (
                     <>
-                        <span onClick={handleLogOut}>Tài khoản</span>
+                        <span>Tài khoản</span>
                     </>
                 ),
             }
@@ -75,13 +76,17 @@ const Header = () => {
         query: '(max-width: 1199px)',
     });
     const handleMenuClick = (e: any) => {
-        console.log('click', e);
+        
+        if(e.key===3){
+
+        }
     };
     const fetchData = async () => {
         const token = localStorage.getItem('access_token')
         const refresh_token = localStorage.getItem('refresh_token')
 
         const role = localStorage.getItem('role')
+        console.log('ssssssssssssssex')
         if (role === 'user') {
             try {
                 if (token && refresh_token) {
@@ -96,7 +101,7 @@ const Header = () => {
                 console.log('error')
             }
 
-        }else if(role==='business'){
+        } else if (role === 'business') {
             try {
                 if (token && refresh_token) {
                     dispatch(setAuthenticate({ loading: true }));
@@ -130,8 +135,15 @@ const Header = () => {
 
     return (
         <div className="wrapper-header">
-            {widthScreenMobile ? <div className="block"><IconMenuHeader onClick={showDrawer}></IconMenuHeader></div> : <></>}
-            <Image src="https://static.careerbuilder.vn/themes/careerbuilder/img/logo.png" preview={false}></Image>
+            {/* <div onClick={showDrawer}>Show</div> */}
+            {/* {widthScreenMobile ? */}
+                {/* <IconMenuHeader onClick={showDrawer}></IconMenuHeader> */}
+
+                 {/* : <></>} */}
+            <div>
+                <Image src="https://static.careerbuilder.vn/themes/careerbuilder/img/logo.png" preview={false}></Image>
+
+            </div>
             {isAuthenticated ?
                 <>
                     {loading ? <Skeleton active loading={loading} /> : <div className="right-header">
@@ -140,7 +152,7 @@ const Header = () => {
                             trigger={['click']}
                         >
                             <div className="avatar">
-                                <Image src={account.avatar} preview={false}></Image>
+                                <Image src={account?.avatar} preview={false}></Image>
                             </div>
 
                         </Dropdown>

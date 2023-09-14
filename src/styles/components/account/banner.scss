@@ -1,0 +1,33 @@
+.banner-component {
+    .banner {
+        position: relative;
+
+        .ant-image {
+            width: 100%;
+            img {
+                height: 200px;
+                object-fit: none;
+            }
+        }
+
+        .avatar {
+            position: absolute;
+            bottom: -15%;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            left: 5%;
+
+            .right-username {
+                padding-left: 1rem;
+                color: black;   
+                .username{
+                    font-weight: 600;
+                    font-size: 26px;
+                }
+                display: flex;
+                flex-direction: column;
+            }
+        }
+    }
+}

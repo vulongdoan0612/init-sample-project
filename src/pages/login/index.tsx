@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import { isLoggedIn } from "@/utils/checkToken";
 import useDidMountEffect from "@/utils/customHook";
 import Link from "next/link";
+// import { IconMenuHeader } from "@/components/CustomIcons";
 
 const Login = () => {
     const router = useRouter();
@@ -31,13 +32,14 @@ const Login = () => {
                     console.log(response?.data?.refreshToken)
                     localStorage.setItem('access_token', response?.data?.token);
                     localStorage.setItem('refresh_token', response?.data?.refreshToken);
+                    localStorage.setItem('role', response?.data?.role);
                 } finally {
-                    const profile = await getProfile(response?.data?.token, response?.data?.refreshToken)
-                    console.log(profile)
-                    if (response.status === 200 && profile?.user) {
-                        console.log(profile.data)
-                        dispatch(setAuthenticate({ isAuthenticated: true, account: profile?.user, loading: false }));
-                    }
+                    // const profile = await getProfile(response?.data?.token, response?.data?.refreshToken)
+                    // console.log(profile)
+                    // if (response.status === 200 && profile?.user) {
+                    //     console.log(profile.data)
+                    //     dispatch(setAuthenticate({ isAuthenticated: true, account: profile?.user, loading: false }));
+                    // }
                     router.push('/');
                 }
 
@@ -100,7 +102,6 @@ const Login = () => {
                     >
                         <Input.Password />
                     </Form.Item>
-
 
 
                     <Form.Item className="forgot-password">
