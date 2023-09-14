@@ -23,7 +23,7 @@ const ModalEditPlan = ({ isEdit, open, handleCancel, selectedItem }: any) => {
         });
     }, [
         form,
-        selectedItem?.plan,
+        selectedItem?.userInfo ? selectedItem?.userInfo[0].plan : '',
     ]);
     const onFinish = async (values: any) => {
         try {
@@ -42,13 +42,14 @@ const ModalEditPlan = ({ isEdit, open, handleCancel, selectedItem }: any) => {
             console.log(error)
         }
     };
-
+    console.log(selectedItem?.userInfo ? selectedItem?.userInfo[0]?.plan : '')
     return (
         <CustomModal
             title={'Edit Plan'}
             open={open}
             onCancel={handleCancel}
             className="modal-banner"
+
             width={'50vw'}
         >
             <Form
@@ -57,11 +58,12 @@ const ModalEditPlan = ({ isEdit, open, handleCancel, selectedItem }: any) => {
                 onFinish={onFinish}
                 autoComplete="off"
                 initialValues={{
-                    plan: selectedItem?.plan,
+                    plan: selectedItem?.userInfo ? selectedItem?.userInfo[0]?.plan : '',
                 }}
             >
                 <Form.Item name="plan" label="Plan" rules={[{ required: true, message: 'Name is required' }]}>
                     <TextArea
+                    
                         placeholder="Controlled autosize"
                         autoSize={{ minRows: 3, maxRows: 5 }}
                     />

@@ -66,11 +66,18 @@ export const requestRegister = async (data: IRegister) => {
   return axios(config);
 };
 export const changeProfile = async (data: any,accessToken:string |null) => {
+  const formData = new FormData();
+  if (data.avatar && data.avatar.length > 0) {
+    formData.append('avatar', data.avatar[0].originFileObj);
+  }
+  console.log(data)
   const config = {
     method: "PUT",
     url: `/change-profile`,
-    data: data,
+    data: data.avatar && data.avatar.length ? formData: data ,
     headers: {
+      'Content-Type': 'multipart/form-data',
+
       'Authorization': accessToken
     },
   };
