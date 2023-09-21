@@ -1,4 +1,4 @@
-import { IForgotPassword, ILogin, IRegister, IResetPassword } from "@/interfaces/request/account";
+import { IForgotPassword, ILogin, IRegister, IRegisterEmployer, IResetPassword } from "@/interfaces/request/account";
 import { setAuthenticate } from "@/redux/reducers/auth";
 import { axios } from "@/utils/axios";
 
@@ -65,16 +65,24 @@ export const requestRegister = async (data: IRegister) => {
 
   return axios(config);
 };
-export const changeProfile = async (data: any,accessToken:string |null) => {
+export const requestRegisterEmployer = async (data: IRegisterEmployer) => {
+  const config = {
+    method: "POST",
+    url: `/register-employer`,
+    data: data,
+  };
+
+  return axios(config);
+};
+export const changeProfile = async (data: any, accessToken: string | null) => {
   const formData = new FormData();
   if (data.avatar && data.avatar.length > 0) {
     formData.append('avatar', data.avatar[0].originFileObj);
   }
-  console.log(data)
   const config = {
     method: "PUT",
     url: `/change-profile`,
-    data: data.avatar && data.avatar.length ? formData: data ,
+    data: data.avatar && data.avatar.length ? formData : data,
     headers: {
       'Content-Type': 'multipart/form-data',
 
@@ -84,15 +92,55 @@ export const changeProfile = async (data: any,accessToken:string |null) => {
 
   return axios(config);
 };
-export const changeProfileEmployer = async (data: any,accessToken:string |null) => {
+export const uploadCv = async (data: any, accessToken: string | null) => {
+  const formData = new FormData();
+  if (data.cv.file.name) {
+    formData.append('cv', data.cv.file.originFileObj);
+
+  }
   const config = {
-    method: "PUT",
-    url: `/change-profile-employer`,
+    method: "POST",
+    url: `/upload-cv`,
+    data: formData,
+    headers: {
+      'Content-Type': 'multipart/form-data',
+
+      'Authorization': accessToken
+    },
+  };
+
+  return axios(config);
+};
+export const deleteCV = async (data: any, accessToken: string) => {
+
+  const config = {
+    method: "DELETE",
+    url: `/delete-cv`,
     data: data,
     headers: {
       'Authorization': accessToken
     },
   };
+
+  return axios(config);
+}
+export const changeProfileEmployer = async (data: any, accessToken: string | null) => {
+  const formData = new FormData();
+  if (data.avatar && data.avatar.length > 0) {
+    formData.append('avatar', data.avatar[0].originFileObj);
+  }
+  const config = {
+    method: "PUT",
+    url: `/change-profile-employer`,
+    data: data.avatar && data.avatar.length ? formData : data,
+    headers: {
+      'Content-Type': 'multipart/form-data',
+
+      'Authorization': accessToken
+    },
+  };
+
+
 
   return axios(config);
 };
@@ -148,7 +196,6 @@ export const getProfileEmployer = async (accessToken: string, refresh_token: str
   }
 };
 export const requestNewAccessToken = async (refreshToken: string) => {
-  console.log(refreshToken)
   try {
     const config = {
       method: "POST",

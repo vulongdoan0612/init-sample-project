@@ -10,7 +10,7 @@ import dynamic from 'next/dynamic'
 
 interface PropsPage {
     title: string;
-    loadingData: boolean;
+    loadingData?: boolean;
     children: React.ReactNode;
 
 }
@@ -18,7 +18,6 @@ const TestimonialCard = dynamic(() => import('../components/Header/index'), { ss
 
 const Page = (props: PropsPage) => {
     const { title, loadingData, children, } = props
-    console.log(title)
     const page = useMemo(() => {
         if (loadingData) {
             return <FullScreenLoading />;
@@ -47,7 +46,7 @@ const Page = (props: PropsPage) => {
                         </div> : <></>}
 
                         <div className={`page-wrapper ${title === 'LOGIN' ? 'disable-scroll' : ''}`}>
-                            <div className="default-page">{page}</div>
+                            <div className={`default-page ${title ==='LOGIN' ? 'disable-margin' :""}`}>{page}</div>
                         </div>
                     </div>
                 </div>

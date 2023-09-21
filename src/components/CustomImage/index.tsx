@@ -1,5 +1,10 @@
-import React, { CSSProperties, ReactEventHandler, useEffect, useState } from 'react';
-import Image from 'next/image';
+import React, {
+  CSSProperties,
+  ReactEventHandler,
+  useEffect,
+  useState,
+} from "react";
+import Image from "next/image";
 
 interface IProps {
   src: string;
@@ -20,9 +25,9 @@ const CustomImage = ({
   height,
   className,
   sizes,
-  defaultSrc = '/images/default-image.jpg',
+  defaultSrc = "/images/default-image.jpg",
   style,
-  alt = '',
+  alt = "",
   onLoad,
   onClick,
 }: IProps) => {
@@ -41,7 +46,7 @@ const CustomImage = ({
       height={height}
       quality={100}
       className={`duration-200 ease-in-out group-hover:opacity-75 aspect-square object-cover ${
-        loading ? 'scale-110 blur-md grayscale' : 'scale-100 blur-0 grayscale-0'
+        loading ? "scale-110 blur-md grayscale" : "scale-100 blur-0 grayscale-0"
       } ${className}`}
       onLoad={onLoad}
       onLoadingComplete={() => setLoading(false)}

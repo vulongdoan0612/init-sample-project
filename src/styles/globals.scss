@@ -59,7 +59,7 @@
       position: fixed;
       width: calc(100% - 4.625rem);
     }
-
+    background-color: #575757 !important; 
     // width: calc(100% - 74px);
     position: relative;
     display: flex;
@@ -79,24 +79,26 @@
   }
 
   .page-wrapper {
-    overscroll-behavior-x: contain;
-    overflow-y: scroll;
-    height: 100vh;
+    // overscroll-behavior-x: contain;
+    // overflow-y: scroll;
+    // height: 100vh;
 
     @include mobileToTablet {
       min-height: calc(100vh - 6.375rem);
     }
-
+    .disable-margin{
+      margin-top: 0 !important;
+    }
     .default-page {
-      background-color: var(--Bg-default);
-      min-height: calc(100vh - 4rem);
-      margin-top: 5.25rem;
+     
+          min-height: calc(100vh - 4rem);
+      margin-top: 5.1rem;
     }
   }
 
-  .disable-scroll {
-    overflow: hidden !important
-  }
+  // .disable-scroll {
+  //   overflow: hidden !important
+  // }
 }
 
 ::-webkit-scrollbar {
@@ -108,18 +110,18 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--Dark-1);
+  background: #e7e7e7;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: var(--Lighter);
+  background: #a3a2a2;
   border-radius: 0.25rem;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--Lighter);
+  background: #a3a2a2;
 }
 .ant-dropdown{
   .ant-dropdown-menu-title-content{

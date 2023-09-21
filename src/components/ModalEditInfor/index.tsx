@@ -1,11 +1,18 @@
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input, Upload } from "antd";
 import { useEffect } from "react";
+
 import { useDispatch, useSelector } from "react-redux";
-import { isUndefined } from "lodash";
 import CustomModal from "../CustomModal";
 import { setAuthenticate } from "@/redux/reducers/auth";
-import React from "react";
-import { changeProfile, changeProfileEmployer } from "../../services/account";
+import React, { useState } from "react";
+
+import type { UploadProps } from "antd";
+
+import {
+  changeProfile,
+  changeProfileEmployer,
+  deleteCV,
+} from "../../services/account";
 import { RootState } from "@/redux/store";
 
 const ModalEditInfor = ({ open, handleCancel, selectedItem }: any) => {
@@ -21,90 +28,63 @@ const ModalEditInfor = ({ open, handleCancel, selectedItem }: any) => {
     national: string;
     age: string;
     country: string;
+    cvName: string;
   }>();
   const dispatch = useDispatch();
   const { account } = useSelector((state: RootState) => state.auth);
-
+  const [changeLoading, setChangeLoading] = useState(false);
   useEffect(() => {
     form.setFieldsValue({
       id: selectedItem?.id,
       username: selectedItem?.username,
-      phone: selectedItem?.userInfo
-        ? selectedItem?.userInfo[0]?.phone
-        : selectedItem?.employerInfo
-        ? selectedItem?.employerInfo[0]?.phone
-        : "",
+      phone: selectedItem?.userInfo?.phone,
+      cvName: selectedItem?.cvName,
       email: selectedItem?.email,
-      national: selectedItem?.userInfo
-        ? selectedItem?.userInfo[0]?.national
-        : "",
-      age: selectedItem?.userInfo ? selectedItem?.userInfo[0]?.age : "",
-      country: selectedItem?.userInfo
-        ? selectedItem?.userInfo[0]?.country
-        : selectedItem?.employerInfo
-        ? selectedItem?.employerInfo[0]?.country
-        : "",
-      major: selectedItem?.userInfo
-        ? selectedItem?.userInfo[0]?.major
-        : selectedItem?.employerInfo
-        ? selectedItem?.employerInfo[0]?.major
-        : "",
-      address: selectedItem?.employerInfo
-        ? selectedItem?.employerInfo[0]?.address
-        : "",
-      fax: selectedItem?.employerInfo ? selectedItem?.employerInfo[0]?.fax : "",
-      birthdate: selectedItem?.employerInfo
-        ? selectedItem?.employerInfo[0]?.birthdate
-        : "",
+      national: selectedItem?.userInfo?.national,
+      age: selectedItem?.userInfo?.age,
+      country: selectedItem?.userInfo?.country,
+      major: selectedItem?.userInfo?.major,
+      address: selectedItem?.anotherInformation?.address,
+      fax: selectedItem?.anotherInformation?.fax,
+      birthdate: selectedItem?.anotherInformation?.birthdate,
     });
   }, [
     form,
     selectedItem?.id,
     selectedItem?.username,
-    selectedItem?.userInfo
-      ? selectedItem?.userInfo[0]?.phone
-      : selectedItem?.employerInfo
-      ? selectedItem?.employerInfo[0]?.phone
-      : "",
+    selectedItem?.userInfo?.phone,
     selectedItem?.email,
-    selectedItem?.userInfo ? selectedItem?.userInfo[0].national : "",
-    selectedItem?.userInfo ? selectedItem?.userInfo[0].age : "",
-    selectedItem?.userInfo
-      ? selectedItem?.userInfo[0].country
-      : selectedItem.employerInfo
-      ? selectedItem?.employerInfo[0]?.country
-      : "",
-    selectedItem?.userInfo
-      ? selectedItem?.userInfo[0].major
-      : selectedItem.employerInfo
-      ? selectedItem?.employerInfo[0]?.major
-      : "",
-    selectedItem?.employerInfo ? selectedItem?.employerInfo[0]?.address : "",
-    selectedItem?.employerInfo ? selectedItem?.employerInfo[0]?.fax : "",
-    selectedItem?.employerInfo ? selectedItem?.employerInfo[0]?.birthdate : "",
+    selectedItem?.cvName,
+    selectedItem?.userInfo?.national,
+    selectedItem?.userInfo?.age,
+    selectedItem?.userInfo?.country,
+    selectedItem?.userInfo?.major,
+    selectedItem?.anotherInformation?.address,
+    selectedItem?.anotherInformation?.fax,
+    selectedItem?.anotherInformation?.birthdate,
   ]);
-  console.log(selectedItem);
+
   const onFinish = async (values: any) => {
     try {
-      console.log(values);
       const token = localStorage.getItem("access_token");
       if (account?.role === "user") {
+        setChangeLoading(true);
         const valuesEdit = {
-          ...account.userInfo[0],
+          ...account.userInfo,
           phone: values.phone,
-
           email: values.email,
           national: values.national,
           country: values.country,
           age: values.age,
         };
-        console.log(valuesEdit);
 
         const response = await changeProfile(
           { userInfo: valuesEdit, username: values.username },
           token
         );
         if (response.status === 200) {
+          setChangeLoading(false);
+
           dispatch(
             setAuthenticate({
               isAuthenticated: true,
@@ -115,23 +95,20 @@ const ModalEditInfor = ({ open, handleCancel, selectedItem }: any) => {
         }
       } else {
         const valuesEdit = {
-          ...account.employerInfo[0],
+          ...account.anotherInformation,
           phone: values.phone,
           fax: values.fax,
           email: values.email,
           major: values.major,
           address: values.address,
-
           country: values.country,
           birthdate: values.birthdate,
         };
-        console.log(valuesEdit);
 
         const response = await changeProfileEmployer(
-          { employerInfo: valuesEdit, companyName: values.companyName },
+          { anotherInformation: valuesEdit, companyName: values.companyName },
           token
         );
-        console.log(response)
         if (response.status === 200) {
           dispatch(
             setAuthenticate({
@@ -144,6 +121,8 @@ const ModalEditInfor = ({ open, handleCancel, selectedItem }: any) => {
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      handleCancel();
     }
   };
 
@@ -166,7 +145,7 @@ const ModalEditInfor = ({ open, handleCancel, selectedItem }: any) => {
           companyName: selectedItem?.companyName,
 
           fax: selectedItem?.fax,
-
+          cvName: selectedItem?.cvName,
           phone: selectedItem?.phone,
           email: selectedItem?.email,
           national: selectedItem?.national,
@@ -185,20 +164,23 @@ const ModalEditInfor = ({ open, handleCancel, selectedItem }: any) => {
         ) : (
           <></>
         )}
-        {account?.role ==='employer' ?  <Form.Item
-          name="companyName"
-          label="companyName"
-          rules={[{ message: "Name is required" }]}
-        >
-          <Input />
-        </Form.Item> :  <Form.Item
-          name="username"
-          label="Name"
-          rules={[{ message: "Name is required" }]}
-        >
-          <Input />
-        </Form.Item>}
-       
+        {account?.role === "employer" ? (
+          <Form.Item
+            name="companyName"
+            label="companyName"
+            rules={[{ message: "Name is required" }]}
+          >
+            <Input />
+          </Form.Item>
+        ) : (
+          <Form.Item
+            name="username"
+            label="Name"
+            rules={[{ message: "Name is required" }]}
+          >
+            <Input />
+          </Form.Item>
+        )}
         <Form.Item
           name="email"
           label="email"
@@ -214,41 +196,39 @@ const ModalEditInfor = ({ open, handleCancel, selectedItem }: any) => {
           <Input />
         </Form.Item>{" "}
         {account?.role === "employer" ? (
-            <Form.Item
-              name="major"
-              label="major"
-              rules={[{ message: "Fax is required" }]}
-            >
-              <Input />
-            </Form.Item>
-          ) : (
-            <Form.Item
-              name="national"
-              label="national"
-              rules={[{ message: "Name is required" }]}
-            >
-              <Input />
-            </Form.Item>
-          )}
-        
-
-          {account?.role === "employer" ? (
-            <Form.Item
-              name="birthdate"
-              label="birthdate"
-              rules={[{ message: "Fax is required" }]}
-            >
-              <Input />
-            </Form.Item>
-          ) : (
-            <Form.Item
-              name="age"
-              label="Age"
-              rules={[{ message: "Name is required" }]}
-            >
-              <Input />
-            </Form.Item>
-          )}
+          <Form.Item
+            name="major"
+            label="major"
+            rules={[{ message: "Fax is required" }]}
+          >
+            <Input />
+          </Form.Item>
+        ) : (
+          <Form.Item
+            name="national"
+            label="national"
+            rules={[{ message: "Name is required" }]}
+          >
+            <Input />
+          </Form.Item>
+        )}
+        {account?.role === "employer" ? (
+          <Form.Item
+            name="birthdate"
+            label="birthdate"
+            rules={[{ message: "Fax is required" }]}
+          >
+            <Input />
+          </Form.Item>
+        ) : (
+          <Form.Item
+            name="age"
+            label="Age"
+            rules={[{ message: "Name is required" }]}
+          >
+            <Input />
+          </Form.Item>
+        )}
         <Form.Item
           name="country"
           label="country"
@@ -271,7 +251,7 @@ const ModalEditInfor = ({ open, handleCancel, selectedItem }: any) => {
           className="column-buttons flex justify-end"
           style={{ marginTop: "24px" }}
         >
-          <Button htmlType="submit" type="primary">
+          <Button htmlType="submit" type="primary" loading={changeLoading}>
             Edit
           </Button>
         </div>

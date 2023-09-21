@@ -5,13 +5,13 @@ import { WritableDraft } from "immer/dist/internal";
 interface IState {
   isAuthenticated?: boolean;
   account?: any;
-  loading?:boolean;
+  loading?: boolean;
 }
 
 const initialState: IState = {
   isAuthenticated: false,
   account: {},
-  loading:false
+  loading: false
 };
 
 const slicer = createSlice({
@@ -23,7 +23,7 @@ const slicer = createSlice({
       action: PayloadAction<{
         isAuthenticated?: boolean;
         account?: any;
-        loading?:boolean
+        loading?: boolean
       }>
     ) => {
       state.isAuthenticated = action.payload.isAuthenticated;
