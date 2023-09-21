@@ -20,7 +20,6 @@ import ModalUploadCv from "../ModalUploadCV";
 import { fetchListAppliedJob } from "@/redux/reducers/appliedJob";
 import { fetchListCreateJob } from "@/redux/reducers/listCreateJob";
 import useDidMountEffect from "@/utils/customHook";
-import { useRouter } from "next/router";
 import { isEmpty } from "lodash";
 import ModalEditJob from "../ModalEditJob";
 
@@ -32,15 +31,10 @@ const Content = () => {
   const [isModalVisibleUpload, setIsModalVisibleUpload] =
     useState<boolean>(false);
   const [pageSize, setPagesize] = useState(10);
-
   const [isModalVisibleAnother, setIsModalVisibleAnother] =
     useState<boolean>(false);
   const dispatch = useDispatch<any>();
   const { applied } = useSelector((state: RootState) => state.appliedJob);
-  const { listCreateJob, loadingCreateJob } = useSelector(
-    (state: RootState) => state.listCreateJob
-  );
-
   const [selectedItemUpload, setSelectedItemUpload] = useState([]);
   const [selectedItemJob, setSelectedItemJob] = useState([]);
   const [selectedItemPlan, setSelectedItemPlan] = useState([]);
@@ -50,8 +44,14 @@ const Content = () => {
   const [selectedItem, setSelectedItem] = useState([]);
   const [loadingPage, setLoadingPage] = useState<any>(false);
 
+  const { listCreateJob, loadingCreateJob } = useSelector(
+    (state: RootState) => state.listCreateJob
+  );
   const { account, loading } = useSelector((state: RootState) => state.auth);
 
+  useEffect(() => {
+    setLoadingPage(loading);
+  });
   useDidMountEffect(() => {
     fetchApplied();
   }, [filter, current]);
@@ -142,10 +142,6 @@ const Content = () => {
     setTab(key);
   };
 
-  useEffect(() => {
-    setLoadingPage(loading);
-  });
-
   const columns: TableProps<any>["columns"] = [
     {
       title: "Company",
@@ -193,7 +189,6 @@ const Content = () => {
       fixed: "right",
       width: 50,
       key: "status",
-      // render: (text:string) => <a href={text}>CV Link</a>,
     },
   ];
   const handleEditJob = (item: any) => {
@@ -373,7 +368,6 @@ const Content = () => {
                             <div className="header">
                               <div className="left">
                                 <UserOutlined />
-
                                 <span>Thông tin cá nhân *</span>
                               </div>
                               {account?.username && account?.email && (

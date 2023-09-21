@@ -1,21 +1,76 @@
+import { editJob } from "@/services/job";
 import CustomModal from "../CustomModal";
 import { Button, Form, Input } from "antd";
-import { useEffect } from "react";
+import JoditEditor from "jodit-react";
+import dynamic from "next/dynamic";
+import { useEffect, useState } from "react";
+const Jodit = dynamic(() => import('../Jodit'), { ssr: false })
 
 const ModalEditJob = ({ isEdit, open, handleCancel, selectedItem }: any) => {
-  const [form] = Form.useForm<{ title: string; address: string }>();
+  const [form] = Form.useForm<{
+    title: string;
+    address: string;
+    welfare: string;
+    deadline: string;
+    description: string;
+    rank: string;
+    reason: string;
+    requirement: string;
+    salary: string;
+  }>();
   useEffect(() => {
     form.setFieldsValue({
       title: selectedItem?.title,
       address: selectedItem?.address,
+      reason: selectedItem?.reason,
+      description: selectedItem?.description,
+      salary: selectedItem?.salary,
+      rank: selectedItem?.rank,
+      deadline: selectedItem?.deadline,
+      requirement: selectedItem?.requirement,
+      welfare: selectedItem?.welfare,
     });
-  }, [form, selectedItem?.title, selectedItem?.address]);
+  }, [
+    form,
+    selectedItem?.title,
+    selectedItem?.address,
+    selectedItem?.reason,
+    selectedItem?.description,
+    selectedItem?.salary,
+    selectedItem?.rank,
+    selectedItem?.deadline,
+    selectedItem?.requirement,
+    selectedItem?.welfare,
+  ]);
+  const [postRequire, setPostRequire] = useState(selectedItem?.requirement);
+  const [postReason, setPostReason] = useState(selectedItem?.reason);
+  const [postWelfare, setPostWelfare] = useState(selectedItem?.welfare);
+  const [postDescription, setPostDescription] = useState(selectedItem?.description);
+
   const onFinish = async (values: any) => {
     try {
+      const accessToken=localStorage.getItem('access_token');
+      await editJob(accessToken,values,selectedItem?.slug)
+      console.log(values)
+
     } catch (error) {
       console.log(error);
     }
   };
+console.log(selectedItem?.reason)
+  const contentFieldChanagedRequire = (data: any) => {
+    setPostRequire(data);
+  };
+  const contentFieldChanagedReason = (data: any) => {
+    setPostReason(data);
+  };
+  const contentFieldChanagedWelfare = (data: any) => {
+    setPostWelfare(data);
+  };
+  const contentFieldChanagedDescription = (data: any) => {
+    setPostDescription(data);
+  };
+
   return (
     <CustomModal
       title={"Edit Plan"}
@@ -32,6 +87,13 @@ const ModalEditJob = ({ isEdit, open, handleCancel, selectedItem }: any) => {
         initialValues={{
           title: selectedItem?.title,
           address: selectedItem?.address,
+          deadline: selectedItem?.deadline,
+          salary: selectedItem?.salary,
+          requirement: selectedItem?.requirement,
+          rank: selectedItem?.rank,
+          reason: selectedItem?.reason,
+          welfare: selectedItem?.welfare,
+          description: selectedItem?.description,
         }}
       >
         <Form.Item
@@ -42,11 +104,80 @@ const ModalEditJob = ({ isEdit, open, handleCancel, selectedItem }: any) => {
           <Input />
         </Form.Item>
         <Form.Item
+          name="salary"
+          label="Salary"
+          rules={[{ message: "Name is required" }]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          name="rank"
+          label="Rank"
+          rules={[{ message: "Name is required" }]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          name="deadline"
+          label="Deadline"
+          rules={[{ message: "Name is required" }]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
           name="address"
           label="Address"
           rules={[{ message: "Name is required" }]}
         >
           <Input />
+        </Form.Item>
+        <Form.Item
+          name="requirement"
+          label="Your skills and experience"
+          rules={[{ message: "Name is required" }]}
+        >
+          <Jodit
+            content={postRequire}
+            setContent={(c: any) => {
+              contentFieldChanagedRequire(c);
+            }}
+          />
+        </Form.Item>
+        <Form.Item
+          name="reason"
+          label="Top 3 reasons to join us"
+          rules={[{ message: "Name is required" }]}
+        >
+          <Jodit
+            content={postReason}
+            setContent={(c: any) => {
+              contentFieldChanagedReason(c);
+            }}
+          />
+        </Form.Item>
+        <Form.Item
+          name="welfare"
+          label="Why you'll love working here"
+          rules={[{ message: "Name is required" }]}
+        >
+          <Jodit
+            content={postWelfare}
+            setContent={(c: any) => {
+              contentFieldChanagedWelfare(c);
+            }}
+          />
+        </Form.Item>
+        <Form.Item
+          name="description"
+          label="Job description"
+          rules={[{ message: "Name is required" }]}
+        >
+          <Jodit
+            content={postDescription}
+            setContent={(c: any) => {
+              contentFieldChanagedDescription(c);
+            }}
+          />
         </Form.Item>
         <div
           className="column-buttons flex justify-end"

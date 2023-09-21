@@ -42,6 +42,7 @@ export default slice.reducer;
 
 export const fetchListJobs = createAsyncThunk('fetch/jobs', async (arg: IFetchJob) => {
   const { pageSize, current, filter, type } = arg;
+  console.log(type)
   const res = await getAllJob(pageSize, current, filter, type);
   return res?.data;
 });

@@ -3,10 +3,10 @@ import { PAGE_TITLE } from "@/constants";
 import Page from "@/layout/Page";
 import { Button, Form, Input } from "antd";
 import { requestRegisterEmployer } from "@/services/account";
-import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import { isLoggedIn } from "@/utils/checkToken";
 import useDidMountEffect from "@/utils/customHook";
+import Link from "next/link";
 
 const SignUp = () => {
   const router = useRouter();
@@ -27,7 +27,7 @@ const SignUp = () => {
       const response = await requestRegisterEmployer(dataLogin);
       if (
         response.status === 201 &&
-        response?.data?.message === "Employer registered successfully."
+        response?.data?.message === "employer registered successfully."
       ) {
         router.push("/login-employer");
       } else if (response.status === 400) {
@@ -111,15 +111,14 @@ const SignUp = () => {
           >
             <Input.Password />
           </Form.Item>
-
-          <Form.Item
-            name="remember"
-            valuePropName="checked"
-            wrapperCol={{
-              offset: 8,
-              span: 16,
-            }}
-          ></Form.Item>
+          <Form.Item className="forgot-password">
+            <Form.Item name="remember" valuePropName="checked" noStyle>
+              <Link href="/login-employer">Bạn đã có tài khoản ?</Link>
+            </Form.Item>
+            <Link className="login-form-forgot" href="/register">
+              Bạn là người dùng ?
+            </Link>
+          </Form.Item>
 
           <Form.Item
             wrapperCol={{

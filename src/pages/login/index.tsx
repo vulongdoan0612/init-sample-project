@@ -66,6 +66,18 @@ const Login = () => {
           onFinishFailed={onFinishFailed}
           autoComplete="off"
         >
+          <Form.Item name="remember" valuePropName="checked" noStyle>
+            <Link
+              href="/login-employer"
+              style={{
+                display: "flex",
+                justifyContent: "end",
+                marginBottom: "1.5rem",
+              }}
+            >
+              Bạn là doanh nghiệp ?
+            </Link>
+          </Form.Item>
           <Form.Item
             label="Username"
             name="username"
@@ -94,9 +106,8 @@ const Login = () => {
 
           <Form.Item className="forgot-password">
             <Form.Item name="remember" valuePropName="checked" noStyle>
-              <Link href="/login-employer">Bạn là doanh nghiệp ?</Link>
+              <Link href="/register">Bạn chưa có tài khoản ?</Link>
             </Form.Item>
-
             <Link className="login-form-forgot" href="/forgot-password">
               Forgot password
             </Link>

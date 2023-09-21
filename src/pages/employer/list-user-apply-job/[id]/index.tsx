@@ -52,7 +52,8 @@ const ListUserApply = () => {
   };
   useEffect(() => {
     fetchApplied();
-  }, [id]);
+  }, [id])
+  console.log(detailOpening.applicant);
   return (
     <Page title={PAGE_TITLE.HOME} loadingData={false}>
       <div className="wrapper-job-profile">
@@ -62,29 +63,41 @@ const ListUserApply = () => {
               <Skeleton loading={loading} active avatar />
             ) : (
               <>
-                {userAppliedJob?.data?.map((item: any, index: number) => {
-                  return (
-                    <div onClick={() => handleClickOpen(item)} key={index}>
-                      <CardProfile item={item} active={active}></CardProfile>
-                    </div>
-                  );
-                })}
+                {userAppliedJob?.data ? (
+                  <>
+                    {userAppliedJob?.data?.map((item: any, index: number) => {
+                      return (
+                        <div onClick={() => handleClickOpen(item)} key={index}>
+                          <CardProfile
+                            item={item}
+                            active={active}
+                          ></CardProfile>
+                        </div>
+                      );
+                    })}
+                  </>
+                ) : (
+                  <Image
+                    src="/images/search-not-found.png"
+                    preview={false}
+                  ></Image>
+                )}
               </>
             )}
-            {isEmpty(userAppliedJob) && !loading ? (
+            {/* {userAppliedJob.error ===
+              "Không tìm thấy ứng viên cho công việc này." ? (
               <Image
                 src="./images/search-not-found.png"
                 preview={false}
               ></Image>
             ) : (
               <></>
-            )}
+            )} */}
           </div>
-          {detailOpening !== null && (
-            <div className="right">
+          {detailOpening?.applicant ? <div className="right">
               <DetailApplier detailOpening={detailOpening}></DetailApplier>
-            </div>
-          )}
+            </div> : <></>}
+         
         </div>
       </div>
       {!isEmpty(userAppliedJob) && !loading ? (

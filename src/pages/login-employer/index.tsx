@@ -65,6 +65,12 @@ const LoginEmployer = () => {
           onFinishFailed={onFinishFailed}
           autoComplete="off"
         >
+           <Form.Item className="forgot-password" noStyle>
+            <Link href="/login" style={{justifyContent:'end',display:'flex',paddingBottom:'1.5rem'}}>
+              Bạn là người dùng ?
+            </Link>
+          
+          </Form.Item>
           <Form.Item
             label="Username"
             name="username"
@@ -92,8 +98,8 @@ const LoginEmployer = () => {
           </Form.Item>
 
           <Form.Item className="forgot-password">
-            <Link href="/login">
-              <span>Bạn là người dùng ?</span>
+            <Link href="/register-employer">
+              <span>Bạn chưa có tài khoản ?</span>
             </Link>
             <Link
               className="login-form-forgot"

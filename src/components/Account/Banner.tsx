@@ -2,7 +2,6 @@ import { RootState } from "@/redux/store";
 import { Image } from "antd";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-
 import ModalAvatar from "../ModalAvatar";
 
 const Banner = () => {

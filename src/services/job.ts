@@ -59,7 +59,7 @@ export const getListCreateJob = async (token: string, pageSize: number, currentP
 export const getAllJob = async (pageSize: number, currentPage: number, filter: string, type: any) => {
   let typeParam = type;
   if (Array.isArray(type)) {
-    typeParam = type.map(encodeURIComponent).join('&');
+    typeParam = type.map(encodeURIComponent).join('$');
   }
   const config = {
     method: "GET",
@@ -73,6 +73,19 @@ export const getAllTypeJob = async () => {
   const config = {
     method: "GET",
     url: `/get-all-type`
+  };
+
+  return axios(config);
+};
+
+export const editJob = async (accessToken: string |null, data: any,slug:string|null) => {
+  const config = {
+    method: "PUT",
+    url: `/edit-job-employer?querySlug=${slug}`,
+    data:data,
+    headers: {
+      'Authorization': accessToken
+    },
   };
 
   return axios(config);

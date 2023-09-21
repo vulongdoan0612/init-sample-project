@@ -27,7 +27,7 @@ const CardJob = (props: any) => {
       </div>
       <div className="title">
         <div className="avatar">
-          <Image src={item.avatar} preview={false} />
+          <Image src={item?.avatar} preview={false} />
         </div>
         <div className="companyName">{item?.company}</div>
       </div>
@@ -54,7 +54,6 @@ const CardJob = (props: any) => {
       <span className="line"></span>
       <div className="description">
         <table>
-          {" "}
           <tbody>
             <tr>
               <td dangerouslySetInnerHTML={{ __html: item.reason }} />

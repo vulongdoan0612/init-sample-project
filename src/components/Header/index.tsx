@@ -99,6 +99,7 @@ const Header = () => {
             String(token),
             String(refresh_token)
           );
+          console.log(response);
           if (response?.user) {
             dispatch(
               setAuthenticate({
@@ -136,6 +137,9 @@ const Header = () => {
     }
   };
 
+  const handleRegister = () => {
+    router.push("/register");
+  };
   const menuProps = {
     items,
     onClick: handleMenuClick,
@@ -149,6 +153,7 @@ const Header = () => {
 
   return (
     <div className="wrapper-header">
+      {/* <div onClick={showDrawer}>Show</div> */}
       {widthScreenMobile ? (
         <SidebarMenu onClick={showDrawer}></SidebarMenu>
       ) : (
@@ -178,7 +183,10 @@ const Header = () => {
         <div className="right-header">
           <Dropdown menu={menuProps} trigger={["click"]}>
             <div className="avatar">
-              <Image src="" preview={false}></Image>
+              <Image
+                src="images/default-avatar.jpg"
+                preview={false}
+              ></Image>
             </div>
           </Dropdown>
         </div>

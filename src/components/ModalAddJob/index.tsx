@@ -6,6 +6,7 @@ import React from "react";
 import { RootState } from "@/redux/store";
 import dynamic from "next/dynamic";
 import { uploadJob } from "@/services/job";
+import { toast } from "react-toastify";
 const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
 
 const ModalAddJob = ({
@@ -62,24 +63,25 @@ const ModalAddJob = ({
       label: i.toString(36) + i,
     });
   }
+  const notify = () => toast("Wow so easy!");
 
   const onFinish = async (values: any) => {
     try {
       const token = localStorage.getItem("access_token");
       const valuesSend = {
-        title: values.title,
+        title: values?.title,
         email: account.email,
         company: account.companyName,
-        slug: `${account.companyName}&${values.title} `,
-        salary: values.salary,
-        address: values.address,
-        rank: values.rank,
-        reason: values.reason, //Top 3 reasons to join us
-        deadline: values.deadline,
-        type: values.type, //Skills
-        welfare: values.welfare, // Why you'll love working here
-        description: values.description, //Job description
-        requirement: values.requirement, //Your skills and experience
+        slug: `${account.companyName}&${values?.title} `,
+        salary: values?.salary,
+        address: values?.address,
+        rank: values?.rank,
+        reason: values?.reason, //Top 3 reasons to join us
+        deadline: values?.deadline,
+        type: values?.type, //Skills
+        welfare: values?.welfare, // Why you'll love working here
+        description: values?.description, //Job description
+        requirement: values?.requirement, //Your skills and experience
         anotherInformation: {
           countEmploy: account?.anotherInformation
             ? account?.anotherInformation?.countEmploy
@@ -95,7 +97,13 @@ const ModalAddJob = ({
             : "",
         },
       };
-      await uploadJob(valuesSend, String(token));
+
+      const res = await uploadJob(valuesSend, String(token));
+      if (res.status === 200) {
+        toast.error(res.data.error);
+      } else {
+        toast.success(res.data.message);
+      }
     } catch (error) {
       console.log(error);
     } finally {
