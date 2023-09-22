@@ -4,9 +4,14 @@ import { Button, Form, Input } from "antd";
 import JoditEditor from "jodit-react";
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/redux/store";
+import { fetchListCreateJob } from "@/redux/reducers/listCreateJob";
 const Jodit = dynamic(() => import('../Jodit'), { ssr: false })
 
-const ModalEditJob = ({ isEdit, open, handleCancel, selectedItem }: any) => {
+const ModalEditJob = ({ initDes, initRe, initReason, initWel,current,pageSize,filter, open, handleCancel, selectedItem }: any) => {
+    const dispatch = useDispatch<AppDispatch>();
+
   const [form] = Form.useForm<{
     title: string;
     address: string;
@@ -18,6 +23,7 @@ const ModalEditJob = ({ isEdit, open, handleCancel, selectedItem }: any) => {
     requirement: string;
     salary: string;
   }>();
+  console.log(selectedItem);
   useEffect(() => {
     form.setFieldsValue({
       title: selectedItem?.title,
@@ -42,22 +48,51 @@ const ModalEditJob = ({ isEdit, open, handleCancel, selectedItem }: any) => {
     selectedItem?.requirement,
     selectedItem?.welfare,
   ]);
-  const [postRequire, setPostRequire] = useState(selectedItem?.requirement);
-  const [postReason, setPostReason] = useState(selectedItem?.reason);
-  const [postWelfare, setPostWelfare] = useState(selectedItem?.welfare);
-  const [postDescription, setPostDescription] = useState(selectedItem?.description);
+  const [postRequire, setPostRequire] = useState('');
+  const [postReason, setPostReason] = useState('');
+  const [postWelfare, setPostWelfare] = useState('');
+  const [postDescription, setPostDescription] = useState("");
+  useEffect(() => {
+    if (initDes) {
+      setPostDescription(initDes);
+    }
+    if (initRe) {
+      setPostRequire(initRe)
+    }
+    if (initReason) {
+      setPostReason(initReason)
+    }
+    if (initWel) {
+      setPostWelfare(initWel)
+    }
+  }, [initDes, initRe, initReason, initWel]);
 
   const onFinish = async (values: any) => {
     try {
-      const accessToken=localStorage.getItem('access_token');
-      await editJob(accessToken,values,selectedItem?.slug)
-      console.log(values)
-
+      const send = {
+        address: values.address,
+        deadline: values.deadline,
+        description: postDescription,
+        rank: values.rank,
+        reason: postReason,
+        requirement: postRequire,
+        salary: values.salary,
+        title: values.title,
+        welfare:postWelfare
+      };
+    const token = localStorage.getItem("access_token");
+      await editJob(token, send, selectedItem?.slug);
+      if (token) {
+        dispatch(fetchListCreateJob({ token, pageSize, current, filter }));
+      }
+      console.log(values);
     } catch (error) {
       console.log(error);
     }
+    finally {
+      handleCancel()
+    }
   };
-console.log(selectedItem?.reason)
   const contentFieldChanagedRequire = (data: any) => {
     setPostRequire(data);
   };

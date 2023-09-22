@@ -1,10 +1,9 @@
 import { RootState } from "@/redux/store";
-import { InboxOutlined, UserOutlined } from "@ant-design/icons";
+import { UserOutlined } from "@ant-design/icons";
 import {
   Button,
   Tabs,
   Skeleton,
-  Upload,
   Table,
   TableProps,
   Pagination,
@@ -37,6 +36,11 @@ const Content = () => {
   const { applied } = useSelector((state: RootState) => state.appliedJob);
   const [selectedItemUpload, setSelectedItemUpload] = useState([]);
   const [selectedItemJob, setSelectedItemJob] = useState([]);
+    const [initDescription, setInitDescription] = useState("");
+    const [initWelfare, setInitWelfare] = useState("");
+    const [initRequirement, setInitRequirement] = useState("");
+    const [initReason, setInitReason] = useState("");
+
   const [selectedItemPlan, setSelectedItemPlan] = useState([]);
   const [selectedItemAnother, setSelectedItemAnother] = useState([]);
   const [current, setCurrent] = useState(1);
@@ -194,6 +198,11 @@ const Content = () => {
   const handleEditJob = (item: any) => {
     try {
       setSelectedItemJob(item);
+      setInitDescription(item.description)
+      setInitWelfare(item.welfare);
+      console.log(item)
+      setInitReason(item.reason)
+      setInitRequirement(item.requirement)
     } finally {
       setIsModalVisibleJob(true);
     }
@@ -608,6 +617,13 @@ const Content = () => {
         selectedItem={selectedItem}
       ></ModalEditInfor>
       <ModalEditJob
+        initDes={initDescription}
+        initWel={initWelfare}
+        initRe={initRequirement}
+        pageSize={pageSize}
+        filter={filter}
+    current={current}
+        initReason={initReason}
         open={isModalVisibleJob}
         handleCancel={handleCloseModalEditJob}
         selectedItem={selectedItemJob}

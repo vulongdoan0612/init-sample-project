@@ -19,7 +19,6 @@ const Jodit = ({ content, setContent }:any) => {
       "bold,italic,underline,eraser,ul,ol,font,fontsize,lineHeight,hr,indent,outdent,left",
     placeHolder: "",
   };
-  console.log(content)
   return (
     <JoditEditor
        ref={editor}

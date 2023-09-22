@@ -78,13 +78,13 @@ export const getAllTypeJob = async () => {
   return axios(config);
 };
 
-export const editJob = async (accessToken: string |null, data: any,slug:string|null) => {
+export const editJob = async (token: string |null, data: any,slug:string|null) => {
   const config = {
     method: "PUT",
     url: `/edit-job-employer?querySlug=${slug}`,
     data:data,
     headers: {
-      'Authorization': accessToken
+      'Authorization': token
     },
   };
 
