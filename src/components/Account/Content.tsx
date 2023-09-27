@@ -58,12 +58,12 @@ const Content = () => {
   });
   useDidMountEffect(() => {
     fetchApplied();
-  }, [filter, current]);
+  }, [filter, current,account]);
 
   const onChangePage = (page: number) => {
     setCurrent(page);
   };
-  const fetchApplied = async () => {
+  const fetchApplied = () => {
     const token = localStorage.getItem("access_token");
     if (account?.role === "user") {
       if (token) {

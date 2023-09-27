@@ -6,6 +6,7 @@ import React from "react";
 import { RootState } from "@/redux/store";
 import dynamic from "next/dynamic";
 import { applyJob } from "@/services/job";
+import { toast } from "react-toastify";
 const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
 
 const ModalApply = ({ open, handleCancel, selectedItem }: any) => {
@@ -41,7 +42,13 @@ const ModalApply = ({ open, handleCancel, selectedItem }: any) => {
         coverLetter: values.coverLetter,
         jobId: selectedItem._id,
       };
-      await applyJob(valueSend, String(accessToken));
+      const res = await applyJob(valueSend, String(accessToken));
+      if (res.data.message === "Bạn đã ứng tuyển rồi") {
+        toast.warning(res.data.message)
+      } else {
+        toast.success(res.data.message)
+      }
+      console.log(res)
     } catch (error) {
       console.log(error);
     } finally {

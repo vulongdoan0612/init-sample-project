@@ -63,7 +63,6 @@ const ModalAddJob = ({
       label: i.toString(36) + i,
     });
   }
-  const notify = () => toast("Wow so easy!");
 
   const onFinish = async (values: any) => {
     try {

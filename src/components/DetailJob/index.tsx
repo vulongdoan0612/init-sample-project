@@ -4,25 +4,35 @@ import { LocationIcon } from "../CustomIcons";
 import moment from "moment";
 import React, { useState } from "react";
 import ModalApply from "../ModalApply";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
+import { toast } from "react-toastify";
 
 const DetailJob = (props: any) => {
   const { detailOpening } = props;
   const [selectedItem, setSelectedItem] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+  const { account } = useSelector((state: RootState) => state.auth);
 
   const currentTime = moment(); // Thời gian hiện tại
   const timeAgo = currentTime.diff(moment(detailOpening?.updatedAt), "hours");
   const handleApply = () => {
-    try {
-      setSelectedItem(detailOpening);
-    } catch {
-      console.log({
-        message: "An error has occurred. Please try again later.",
-        description: "Error",
-      });
-    } finally {
-      setIsModalVisible(true);
+    if (account) {
+      try {
+        setSelectedItem(detailOpening);
+      } catch {
+        console.log({
+          message: "An error has occurred. Please try again later.",
+          description: "Error",
+        });
+      } finally {
+        setIsModalVisible(true);
+      }
+    } else {
+      
+      toast.error('Bạn cần phải đăng nhập');
     }
+
   };
   const handleCancle = () => {
     setIsModalVisible(false);
@@ -103,7 +113,7 @@ const DetailJob = (props: any) => {
         </div>
         <div className="line"></div>
         <div className="why-love">
-          <h3>Why you'll love working here</h3>
+          <h3>Why youll love working here</h3>
           <div
             dangerouslySetInnerHTML={{ __html: detailOpening?.welfare }}
           ></div>
