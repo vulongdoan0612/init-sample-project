@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import { isLoggedIn } from "@/utils/checkToken";
 import useDidMountEffect from "@/utils/customHook";
 import Link from "next/link";
+import { toast } from "react-toastify";
 
 const LoginEmployer = () => {
   const router = useRouter();
@@ -32,12 +33,15 @@ const LoginEmployer = () => {
           localStorage.setItem("role", response?.data?.role);
         } finally {
           router.push("/");
+          localStorage.setItem('first_login','true');
         }
-      } else if (response.status === 404) {
-        console.log("Sai mật khẩu hoặc tài khoản không tồn tại cc");
+      } else if (response.data.status === 'NOT_FOUND') {
+        toast.error(response.data.message);
+      } else if (response.data.status === 'WRONG_PASSWORD') {
+        toast.error(response.data.message);
       }
     } catch (error: any) {
-      console.log("Sai mật khẩu hoặc tài khoản không tồn tại", error);
+      toast.error(error)
     }
   };
   const onFinishFailed = (errorInfo: any) => {

@@ -24,7 +24,12 @@
     width: 100%;
   }
 }
-
+.ant-pagination{
+  .ant-pagination-item {
+    background-color: white;
+    border-radius: 10px;
+  }
+}
 .page-container {
   max-width: 1920px;
   width: 100%;
@@ -55,7 +60,7 @@
       @media (max-width:1199px) {
         width: 100% !important;
       }
-      z-index: 1;
+      z-index: 2;
       background: aliceblue;
       position: fixed;
       width: calc(100% - 4.625rem);

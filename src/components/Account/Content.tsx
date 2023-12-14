@@ -427,7 +427,6 @@ const Content = () => {
                     {account?.role === "user" ? (
                       <div className="content-component-2">
                         <Skeleton loading={loadingPage}>
-                          <div>
                             <div className="header">
                               <div className="left">
                                 <UserOutlined />
@@ -442,7 +441,6 @@ const Content = () => {
                                 {account?.userInfo?.plan}
                               </span>
                             </div>
-                          </div>
                         </Skeleton>
                       </div>
                     ) : account?.role === "employer" ? (
@@ -594,11 +592,10 @@ const Content = () => {
                           ) : (
                             <></>
                           )}
-                          ;
+                          
                         </>
                       )}
                     </div>
-                    <div className="right"></div>
                   </div>
                 </div>
               </div>
@@ -622,7 +619,7 @@ const Content = () => {
         initRe={initRequirement}
         pageSize={pageSize}
         filter={filter}
-    current={current}
+        current={current}
         initReason={initReason}
         open={isModalVisibleJob}
         handleCancel={handleCloseModalEditJob}

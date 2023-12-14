@@ -18,7 +18,7 @@ const Banner = () => {
   return (
     <div className="banner-component">
       <div className="banner">
-        <Image src="/images/banner-account.png" preview={false}></Image>
+        <Image src="/images/banner-account.png" preview={false} alt=""></Image>
         <div className="avatar">
           <div className="right-username">
             <span className="username">
@@ -26,6 +26,7 @@ const Banner = () => {
                 src={account?.avatar}
                 onClick={handleEdit}
                 preview={false}
+                alt=""
               ></Image>
               <div className="right">
                 <span>

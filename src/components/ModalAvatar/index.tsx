@@ -78,11 +78,11 @@ const ModalAvatar = ({ initialValues, open, handleCancel }: any) => {
   };
   return (
     <CustomModal
-      title={"Edit Banner"}
+      title={"Edit Avatar"}
       open={open}
       onCancel={handleCancel}
       className="modal-banner"
-      width={"50vw"}
+      width={"20vw"}
     >
       <Form
         form={form}
@@ -90,7 +90,7 @@ const ModalAvatar = ({ initialValues, open, handleCancel }: any) => {
         initialValues={initialValues}
         encType="multipart/form-data"
       >
-        <Item label="Avatar" name="avatar">
+        <Item label="" name="avatar" className="modal-avatar">
           <ImgCrop rotationSlider>
             <Upload
               onChange={onChange}

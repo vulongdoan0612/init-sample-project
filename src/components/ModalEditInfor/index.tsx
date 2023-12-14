@@ -128,7 +128,7 @@ const ModalEditInfor = ({ open, handleCancel, selectedItem }: any) => {
 
   return (
     <CustomModal
-      title={"Edit Banner"}
+      title={"Change Profile"}
       open={open}
       onCancel={handleCancel}
       className="modal-banner"
@@ -143,7 +143,6 @@ const ModalEditInfor = ({ open, handleCancel, selectedItem }: any) => {
           id: selectedItem?.id,
           username: selectedItem?.username,
           companyName: selectedItem?.companyName,
-
           fax: selectedItem?.fax,
           cvName: selectedItem?.cvName,
           phone: selectedItem?.phone,
@@ -157,7 +156,7 @@ const ModalEditInfor = ({ open, handleCancel, selectedItem }: any) => {
           <Form.Item
             name="fax"
             label="Fax"
-            rules={[{ message: "Fax is required" }]}
+            rules={[{ message: "Fax is required", required: true }]}
           >
             <Input />
           </Form.Item>
@@ -167,47 +166,53 @@ const ModalEditInfor = ({ open, handleCancel, selectedItem }: any) => {
         {account?.role === "employer" ? (
           <Form.Item
             name="companyName"
-            label="companyName"
-            rules={[{ message: "Name is required" }]}
+            label="Company Name"
+            rules={[{ message: "Company Name is required", required: true }]}
           >
             <Input />
           </Form.Item>
         ) : (
           <Form.Item
             name="username"
-            label="Name"
-            rules={[{ message: "Name is required" }]}
+            label="Full Name"
+            rules={[{ message: "Full Name is required", required: true }]}
           >
             <Input />
           </Form.Item>
         )}
         <Form.Item
           name="email"
-          label="email"
-          rules={[{ message: "Name is required" }]}
+          label="Email"
+          rules={[{ message: "Email is required", required: true }]}
         >
           <Input />
         </Form.Item>{" "}
         <Form.Item
           name="phone"
-          label="phone"
-          rules={[{ message: "Name is required" }]}
+          label="Phone Number"
+          rules={[
+            {
+              required: true,
+              message: "Phone Number is required",
+              pattern: new RegExp(/^[0-9]+$/),
+            },
+          ]}
         >
-          <Input />
+          <Input maxLength={20} />
         </Form.Item>{" "}
         {account?.role === "employer" ? (
           <Form.Item
             name="major"
-            label="major"
-            rules={[{ message: "Fax is required" }]}
+            label="Major"
+            rules={[{ message: "Major is required", required: true }]}
           >
             <Input />
           </Form.Item>
         ) : (
           <Form.Item
             name="national"
-            label="national"
-            rules={[{ message: "Name is required" }]}
+            label="National"
+            rules={[{ message: "National is required", required: true }]}
           >
             <Input />
           </Form.Item>
@@ -215,8 +220,10 @@ const ModalEditInfor = ({ open, handleCancel, selectedItem }: any) => {
         {account?.role === "employer" ? (
           <Form.Item
             name="birthdate"
-            label="birthdate"
-            rules={[{ message: "Fax is required" }]}
+            label="Date Of Establishment"
+            rules={[
+              { message: "Date Of Establishment is required", required: true },
+            ]}
           >
             <Input />
           </Form.Item>
@@ -224,15 +231,15 @@ const ModalEditInfor = ({ open, handleCancel, selectedItem }: any) => {
           <Form.Item
             name="age"
             label="Age"
-            rules={[{ message: "Name is required" }]}
+            rules={[{ message: "Age is required", required: true }]}
           >
             <Input />
           </Form.Item>
         )}
         <Form.Item
           name="country"
-          label="country"
-          rules={[{ message: "Name is required" }]}
+          label="Country"
+          rules={[{ message: "Country is required", required: true }]}
         >
           <Input />
         </Form.Item>
@@ -240,7 +247,7 @@ const ModalEditInfor = ({ open, handleCancel, selectedItem }: any) => {
           <Form.Item
             name="address"
             label="Address"
-            rules={[{ message: "Fax is required" }]}
+            rules={[{ message: "Address is required", required: true }]}
           >
             <Input />
           </Form.Item>

@@ -43,7 +43,7 @@ const ModalEditPlan = ({ isEdit, open, handleCancel, selectedItem }: any) => {
   };
   return (
     <CustomModal
-      title={"Edit Plan"}
+      title={"Career Orientation"}
       open={open}
       onCancel={handleCancel}
       className="modal-banner"
@@ -61,7 +61,7 @@ const ModalEditPlan = ({ isEdit, open, handleCancel, selectedItem }: any) => {
         <Form.Item
           name="plan"
           label="Plan"
-          rules={[{ required: true, message: "Name is required" }]}
+          rules={[{ required: true, message: "Plan is required" }]}
         >
           <TextArea
             placeholder="Controlled autosize"
