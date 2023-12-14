@@ -56,7 +56,7 @@ const Content = () => {
   useEffect(() => {
     setLoadingPage(loading);
   });
-  useDidMountEffect(() => {
+  useEffect(() => {
     fetchApplied();
   }, [filter, current,account]);
 

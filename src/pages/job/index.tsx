@@ -25,7 +25,7 @@ const Store = () => {
   const [filter, setFilter] = useState("newest");
   const { account } = useSelector((state: RootState) => state.auth);
 
-  useDidMountEffect(() => {
+  useEffect(() => {
     fetchData();
   }, [current]);
   const handleSearch = () => {
